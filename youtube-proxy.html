@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- "origin" makes the browser send a valid Referer to YouTube, which is
+     exactly what FiveM's nui:// browser cannot do on its own. -->
+<meta name="referrer" content="origin">
+<title>LOST ARENA · video proxy</title>
+<style>
+    html, body { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
+    iframe {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 100vw;
+        height: 56.25vw;
+        min-width: 177.78vh;
+        min-height: 100vh;
+        transform: translate(-50%, -50%);
+        border: 0;
+        pointer-events: none;
+    }
+</style>
+</head>
+<body>
+<script>
+(function () {
+    var q = new URLSearchParams(location.search);
+    var id = q.get('v') || q.get('video') || '7njdx6s_UEU';
+    var list = q.get('list') || id;
+    var mute = q.get('mute') || '1';
+    var loop = q.get('loop') || '1';
+
+    var src = 'https://www.youtube.com/embed/' + encodeURIComponent(id) +
+        '?autoplay=1&mute=' + mute +
+        '&loop=' + loop + '&playlist=' + encodeURIComponent(list) +
+        '&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3' +
+        '&disablekb=1&playsinline=1&fs=0&cc_load_policy=0';
+
+    var f = document.createElement('iframe');
+    f.setAttribute('src', src);
+    f.setAttribute('allow', 'autoplay; encrypted-media');
+    f.setAttribute('frameborder', '0');
+    document.body.appendChild(f);
+})();
+</script>
+</body>
+</html>
